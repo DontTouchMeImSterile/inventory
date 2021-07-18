@@ -10,8 +10,6 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 int main() {
 
-  //item #
-  
   //10 items, 10 attributes, 64 attribute chars
   const char invtext[10][10][64] = {
     {"item name", "type",  "description"},
@@ -36,18 +34,12 @@ int main() {
     1  // diamond sword
   };
 
-  //
   //for index in pitem
   //if num is not 0
   //print item name
-  char itemname [20] = "";
-
-  
   for (int i = 0; i < 5; i++) {
     if (!(pitems[i] == 0)) {
 	printf("%s\n", invtext[i][0]);
     }
   }
-  return 0;
-  
 }
