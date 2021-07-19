@@ -2,6 +2,7 @@ extends Node
 
 #Variables and Constants
 
+
 #holds every item
 const ITEMS : Dictionary = {
 	"heavy_thing":  {
@@ -187,20 +188,35 @@ func item_sell(item_key):
 	else:
 		print("cannot sell item \"" + str(item_key) + "\": does not even exist")
 
+#Save inventory to file
+func inv_save():
+	#Create new file
+	var save_inv = File.new()
+	#Open the file
+	save_inv.open("user://inv.save", File.WRITE)
+	#Store the "inventory" Dictionary in JSON format
+	save_inv.store_line(to_json(inventory))
+	#Close
+	save_inv.close()
+
+#Load inventory from file
+func inv_load():
+	#new file
+	var loaded_inv = File.new()
+	#load inv in read mode
+	loaded_inv.open("user://inv.save", File.READ)
+	#turn the string into a dictionary
+	inventory = parse_json(loaded_inv.get_line())
+	#close the file
+	loaded_inv.close()
+
+#Wipe and save the inventory
+func inv_clear():
+	inventory = {}
+	inv_save()
 
 func _ready():
-	money_add(5000)
-	item_buy("painis")
-	item_buy("value_thing")
-	item_sell("painis")
-	item_sell("value_thing")
-	item_remove("painis")
-	item_add("painis")
-	item_remove("value_thing")
-	item_add("painis")
-	shop_item_add("painis")
-	shop_item_remove("painis")
-	shop_item_remove("value_thing")
-	shop_item_add("value_thing")
+	inv_load()
 	print(inventory)
-	print(shop)
+	inv_save()
+	print(str(OS.get_user_data_dir()))
